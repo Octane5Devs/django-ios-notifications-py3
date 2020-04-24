@@ -191,6 +191,7 @@ class Notification(models.Model):
     """
     service = models.ForeignKey(APNService)
     message = models.CharField(max_length=2048, blank=True, help_text='Alert message to display to the user. Leave empty if no alert should be displayed to the user.')
+    title = models.CharField(max_length=240, blank=True, help_text='Title to display to the user. Leave empty if no title should be displayed to the user.')
     badge = models.PositiveIntegerField(null=True, blank=True, help_text='New application icon badge number. Set to None if the badge number must not be changed.')
     silent = models.NullBooleanField(null=True, blank=True, help_text='set True to send a silent notification')
     sound = models.CharField(max_length=30, blank=True, help_text='Name of the sound to play. Leave empty if no sound should be played.')
@@ -269,7 +270,13 @@ class Notification(models.Model):
         if loc_data:
             aps['alert'] = loc_data
         elif self.message:
-            aps['alert'] = self.message
+        	if self.title:
+	            aps['alert'] = {
+	            	"title": self.title,
+	            	"body": self.message
+	            }
+        	else:
+	            aps['alert'] = self.message
 
         if self.badge is not None:
             aps['badge'] = self.badge
