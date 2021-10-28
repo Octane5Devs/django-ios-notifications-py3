@@ -125,9 +125,9 @@ class APNService(BaseService):
         # Split the devices into manageable chunks.
         # Chunk sizes being determined by the `chunk_size` arg.
         device_length = devices.count() if isinstance(devices, models.query.QuerySet) else len(devices)
-        chunks = [devices[i:i + chunk_size] for i in xrange(0, device_length, chunk_size)]
+        chunks = [devices[i:i + chunk_size] for i in range(0, device_length, chunk_size)]
 
-        for index in xrange(len(chunks)):
+        for index in range(len(chunks)):
             chunk = chunks[index]
             self._connect()
 
@@ -205,7 +205,7 @@ class Notification(models.Model):
         super(Notification, self).__init__(*args, **kwargs)
 
     def __unicode__(self):
-        return u'%s%s%s' % (self.message, ' ' if self.message and self.custom_payload else '', self.custom_payload)
+        return '%s%s%s' % (self.message, ' ' if self.message and self.custom_payload else '', self.custom_payload)
 
     @property
     def extra(self):
@@ -238,12 +238,12 @@ class Notification(models.Model):
             raise TypeError("loc_args must be a list or tuple.")
 
         loc_data = {
-            "loc-key": unicode(loc_key),
-            "loc-args": [unicode(a) for a in loc_args],
+            "loc-key": str(loc_key),
+            "loc-args": [str(a) for a in loc_args],
         }
 
         if action_loc_key:
-            loc_data['action-loc-key'] = unicode(action_loc_key)
+            loc_data['action-loc-key'] = str(action_loc_key)
 
         self.loc_payload = json.dumps(loc_data)
 

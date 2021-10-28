@@ -106,7 +106,7 @@ class DeviceResource(BaseResource):
                 return JSONResponse({'error': e.message}, status=400)
             del request.PUT['users']
 
-        for key, value in request.PUT.items():
+        for key, value in list(request.PUT.items()):
             setattr(device, key, value)
         device.save()
 

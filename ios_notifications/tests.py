@@ -4,7 +4,7 @@ import struct
 import os
 import json
 import uuid
-import StringIO
+import io
 
 import django
 from django.test import TestCase
@@ -94,7 +94,7 @@ class APNServiceTest(UseMockSSLServerMixin, TestCase):
 
     def test_pushing_notification_in_chunks(self):
         devices = []
-        for i in xrange(10):
+        for i in range(10):
             token = uuid.uuid1().get_hex() * 2
             device = Device.objects.create(token=token, service=self.service)
             devices.append(device)
@@ -102,7 +102,7 @@ class APNServiceTest(UseMockSSLServerMixin, TestCase):
         started_at = dt_now()
         self.service.push_notification_to_devices(self.notification, devices, chunk_size=2)
         device_count = len(devices)
-        self.assertEquals(device_count,
+        self.assertEqual(device_count,
                           Device.objects.filter(last_notified_at__gte=started_at).count())
 
 
@@ -128,7 +128,7 @@ class APITest(UseMockSSLServerMixin, TestCase):
         self.assertEqual(resp.status_code, 400)
         self.assertTrue(isinstance(resp, JSONResponse))
         content = json.loads(resp.content)
-        keys = content.keys()
+        keys = list(content.keys())
         self.assertTrue('token' in keys and 'service' in keys)
 
     def test_register_device(self):
@@ -194,7 +194,7 @@ class AuthenticationDecoratorTestAuthBasic(UseMockSSLServerMixin, TestCase):
         user_pass = '%s:%s' % (self.user.username, self.user_password)
         auth_header = 'Basic %s' % user_pass.encode('base64')
         resp = self.client.get(url, {}, HTTP_AUTHORIZATION=auth_header)
-        self.assertEquals(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 200)
 
     @override_settings(IOS_NOTIFICATIONS_AUTHENTICATION='AuthBasic')
     def test_basic_authorization_request_invalid_credentials(self):
@@ -202,14 +202,14 @@ class AuthenticationDecoratorTestAuthBasic(UseMockSSLServerMixin, TestCase):
         auth_header = 'Basic %s' % user_pass.encode('base64')
         url = reverse('ios-notifications-device-create')
         resp = self.client.get(url, HTTP_AUTHORIZATION=auth_header)
-        self.assertEquals(resp.status_code, 401)
+        self.assertEqual(resp.status_code, 401)
         self.assertTrue('authentication error' in resp.content)
 
     @override_settings(IOS_NOTIFICATIONS_AUTHENTICATION='AuthBasic')
     def test_basic_authorization_missing_header(self):
         url = reverse('ios-notifications-device-create')
         resp = self.client.get(url)
-        self.assertEquals(resp.status_code, 401)
+        self.assertEqual(resp.status_code, 401)
         self.assertTrue('Authorization header not set' in resp.content)
 
     @override_settings(IOS_NOTIFICATIONS_AUTHENTICATION='AuthDoesNotExist')
@@ -232,7 +232,7 @@ class AuthenticationDecoratorTestAuthBasic(UseMockSSLServerMixin, TestCase):
         auth_header = 'Basic %s' % user_pass.encode('base64')
         self.user.is_staff = True
         resp = self.client.get(url, HTTP_AUTHORIZATION=auth_header)
-        self.assertEquals(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 200)
 
     @override_settings(IOS_NOTIFICATIONS_AUTHENTICATION='AuthBasicIsStaff')
     def test_basic_authorization_is_staff_with_non_staff_user(self):
@@ -243,7 +243,7 @@ class AuthenticationDecoratorTestAuthBasic(UseMockSSLServerMixin, TestCase):
         self.user.is_staff = False
         self.user.save()
         resp = self.client.get(url, HTTP_AUTHORIZATION=auth_header)
-        self.assertEquals(resp.status_code, 401)
+        self.assertEqual(resp.status_code, 401)
         self.assertTrue('authentication error' in resp.content)
 
 
@@ -370,7 +370,7 @@ class ManagementCommandPushNotificationTest(UseMockSSLServerMixin, TestCase):
 
         with self.assertRaises(exception):
             management.call_command('push_ios_notification', service=self.service.pk,
-                                    verbosity=0, stderr=StringIO.StringIO())
+                                    verbosity=0, stderr=io.StringIO())
 
 
 class ManagementCommandCallFeedbackService(TestCase):

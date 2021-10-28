@@ -9,14 +9,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Notification.loc_payload'
-        db.add_column(u'ios_notifications_notification', 'loc_payload',
+        db.add_column('ios_notifications_notification', 'loc_payload',
                       self.gf('django.db.models.fields.CharField')(default='', max_length=240, blank=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
         # Deleting field 'Notification.loc_payload'
-        db.delete_column(u'ios_notifications_notification', 'loc_payload')
+        db.delete_column('ios_notifications_notification', 'loc_payload')
 
 
     models = {
@@ -60,7 +60,7 @@ class Migration(SchemaMigration):
             'Meta': {'unique_together': "(('name', 'hostname'),)", 'object_name': 'APNService'},
             'certificate': ('django.db.models.fields.TextField', [], {}),
             'hostname': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'passphrase': ('django_fields.fields.EncryptedCharField', [], {'max_length': '110', 'null': 'True', 'block_type': "'MODE_CBC'", 'cipher': "'AES'", 'blank': 'True'}),
             'private_key': ('django.db.models.fields.TextField', [], {})
@@ -70,20 +70,20 @@ class Migration(SchemaMigration):
             'added_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'deactivated_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'display': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'last_notified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'os_version': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
             'platform': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
-            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['ios_notifications.APNService']"}),
+            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ios_notifications.APNService']"}),
             'token': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
-            'users': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'ios_devices'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"})
+            'users': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'ios_devices'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"})
         },
         'ios_notifications.feedbackservice': {
             'Meta': {'unique_together': "(('name', 'hostname'),)", 'object_name': 'FeedbackService'},
-            'apn_service': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['ios_notifications.APNService']"}),
+            'apn_service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ios_notifications.APNService']"}),
             'hostname': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'ios_notifications.notification': {
@@ -91,11 +91,11 @@ class Migration(SchemaMigration):
             'badge': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'custom_payload': ('django.db.models.fields.CharField', [], {'max_length': '240', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_sent_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'loc_payload': ('django.db.models.fields.CharField', [], {'max_length': '240', 'blank': 'True'}),
             'message': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['ios_notifications.APNService']"}),
+            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['ios_notifications.APNService']"}),
             'sound': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'})
         }
     }
