@@ -87,7 +87,7 @@ class APNService(BaseService):
     private_key = models.TextField()
     passphrase = EncryptedCharField(
         null=True, blank=True, help_text='Passphrase for the private key',
-        block_type=b'MODE_CBC')
+        block_type='MODE_CBC')
 
     PORT = 2195
     fmt = '!cH32sH%ds'
