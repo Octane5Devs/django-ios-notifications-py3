@@ -26,7 +26,7 @@ setup(
     install_requires=[
         'Django>=1.3',
         'pyOpenSSL>=0.10',
-        'django-fields-py3'
+        'django-fields'
     ],
     dependency_links=[
         'https://github.com/Octane5Devs/django-fields-py3',
