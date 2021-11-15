@@ -29,7 +29,7 @@ setup(
         'django-fields-py3'
     ],
     dependency_links=[
-        'https://github.com/Octane5Devs/django-ios-notifications-py3',
+        'https://github.com/Octane5Devs/django-fields-py3',
         #'https://github.com/Octane5Devs/django-fields-py3/tarball/main#egg=django-fields-0.3.1',
         #'https://github.com/nautilebleu/django-fields/tarball/master#egg=django-fields-0.3.1',
     ],    
