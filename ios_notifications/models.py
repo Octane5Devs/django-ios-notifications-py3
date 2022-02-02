@@ -189,7 +189,7 @@ class Notification(models.Model):
     """
     Represents a notification which can be pushed to an iOS device.
     """
-    service = models.ForeignKey(APNService)
+    service = models.ForeignKey((APNService, on_delete=models.CASCADE)
     message = models.CharField(max_length=2048, blank=True, help_text='Alert message to display to the user. Leave empty if no alert should be displayed to the user.')
     title = models.CharField(max_length=240, blank=True, help_text='Title to display to the user. Leave empty if no title should be displayed to the user.')
     badge = models.PositiveIntegerField(null=True, blank=True, help_text='New application icon badge number. Set to None if the badge number must not be changed.')
@@ -299,7 +299,7 @@ class Device(models.Model):
     token = models.CharField(max_length=64, blank=False, null=False)
     is_active = models.BooleanField(default=True)
     deactivated_at = models.DateTimeField(null=True, blank=True)
-    service = models.ForeignKey(APNService)
+    service = models.ForeignKey((APNService, on_delete=models.CASCADE)
     users = models.ManyToManyField(get_setting('AUTH_USER_MODEL'), blank=True, related_name='ios_devices')
     added_at = models.DateTimeField(auto_now_add=True)
     last_notified_at = models.DateTimeField(null=True, blank=True)
@@ -332,7 +332,7 @@ class FeedbackService(BaseService):
 
     https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingWIthAPS/CommunicatingWIthAPS.html#//apple_ref/doc/uid/TP40008194-CH101-SW3
     """
-    apn_service = models.ForeignKey(APNService)
+    apn_service = models.ForeignKey((APNService, on_delete=models.CASCADE)
 
     PORT = 2196
 
