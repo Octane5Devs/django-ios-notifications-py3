@@ -189,7 +189,7 @@ class Notification(models.Model):
     """
     Represents a notification which can be pushed to an iOS device.
     """
-    service = models.ForeignKey((APNService, on_delete=models.CASCADE)
+    service = models.ForeignKey(APNService, on_delete=models.CASCADE)
     message = models.CharField(max_length=2048, blank=True, help_text='Alert message to display to the user. Leave empty if no alert should be displayed to the user.')
     title = models.CharField(max_length=240, blank=True, help_text='Title to display to the user. Leave empty if no title should be displayed to the user.')
     badge = models.PositiveIntegerField(null=True, blank=True, help_text='New application icon badge number. Set to None if the badge number must not be changed.')
